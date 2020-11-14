@@ -19,8 +19,8 @@ playerMaxCrit = 3
 playerMoveCount = 0
 
 kickWinWords = ["oooh, that was a great kick", "omg, you kick em really hard", "you didn't need to kick em this hard"]
-headbumpWinWords = ["oooh, that was a great headbump", "omg, you bashed your head into him really hard","is your head ok after this headbump"]
-punchWinWords = ["oooh, that was a great punch", "omg, you punched em really hard","you don't need to punch em so hard"]
+headbumpWinWords = ["oooh, that was a great headbump", "omg, you bashed your head into him really hard", "is your head ok after this headbump"]
+punchWinWords = ["oooh, that was a great punch", "omg, you punched em really hard", "you don't need to punch em so hard"]
 
 # the big things
 while playerHealth > 0:
