@@ -19,10 +19,8 @@ playerMaxCrit = 3
 playerMoveCount = 0
 
 kickWinWords = ["oooh, that was a great kick", "omg, you kick em really hard", "you didn't need to kick em this hard"]
-headbumpWinWords = ["oooh, that was a great headbump", "omg, you bashed your head into him really hard",
-                    "is your head ok after this headbump"]
-punchWinWords = ["oooh, that was a great punch", "omg, you punched em really hard",
-                 "you don't need to punch em so hard"]
+headbumpWinWords = ["oooh, that was a great headbump", "omg, you bashed your head into him really hard","is your head ok after this headbump"]
+punchWinWords = ["oooh, that was a great punch", "omg, you punched em really hard","you don't need to punch em so hard"]
 
 # the big things
 while playerHealth > 0:
@@ -37,7 +35,6 @@ while playerHealth > 0:
         # except ValueError:
         #     playerMove = 0
         enemyMove = random.randrange(0, 3)
-        enemyMove = 3
         try:
             playerMove = playerChoiceDict[userInput]
         except KeyError:
@@ -75,7 +72,6 @@ while playerHealth > 0:
                     print("You manage to heal 1 HP... yey")
 
                 critChance = random.randrange(0, 100)
-                critChance = 10
                 if critChance >= critPercent:
                     critHit = random.randrange(1, playerMaxCrit)
                     cls()
