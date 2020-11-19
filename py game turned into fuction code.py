@@ -5,7 +5,7 @@ def cls():
     os.system('cls')
 
 
-# playerChoice = ["kick", "headbump", "punch", "quit", "k", "p", "h"]  # TODO make the input work with only 1 char
+# playerChoice = ["kick", "headbump", "punch", "quit", "k", "p", "h"]
 playerChoiceDict = {"kick": 1, "k": 1, "headbump": 2, "h": 2, "punch": 3, "p": 3, "quit": 4, "settings": 5, "s": 5}  # used
 settingsDict ={"close settings": 1, "close": 1, "instructions": 2}
 playerHealth = 20  # used
@@ -17,8 +17,8 @@ playerMaxCrit = 3  #
 playerMoveCount = 0  #
 
 kickWinWords = ["oooh, that was a great kick", "omg, you kick em really hard", "you didn't need to kick em this hard"]
-headbumpWinWords = ["oooh, that was a great headbump", "omg, you bashed your head into him really hard","is your head ok after this headbump"]
-punchWinWords = ["oooh, that was a great punch", "omg, you punched em really hard","you don't need to punch em so hard"]
+headbumpWinWords = ["oooh, that was a great headbump", "omg, you bashed your head into him really hard", "is your head ok after this headbump"]
+punchWinWords = ["oooh, that was a great punch", "omg, you punched em really hard", "you don't need to punch em so hard"]
 
 # functions block
 # class enemyMove:
@@ -80,12 +80,12 @@ class Player:
 class Game:
     def __init__(self):
         self.gameState = "game"
-        self.theDice = None
-        self.theSettings = {"instructionsON": "ON", }  # add more settings
+        self.theDiceRolled = None
+        self.theSettings = {"instructions": True, }  # add more settings
 
     def instructions(self):
         if self.gameState == "game":
-            print(self.settings["instructionsON"] == "ON" and "You can use kick, headbump, punch \n kick > headbump \n headbump > punch \n punch > kick")
+            print(self.theSettings["instructions"] and "You can use kick, headbump, punch \n kick > headbump \n headbump > punch \n punch > kick")
 
     def gameStateGet(self):
         return self.gameState
@@ -95,21 +95,20 @@ class Game:
             if p.playerMoveGet() == 1 or p.playerMoveGet() == 2 or p.playerMoveGet() == 3:
 
                 if p.playerMoveGet() > e.enemyMoveGet() and not (p.playerMoveGet() == 3 and e.enemyMoveGet() == 1):
-                    self.theDice = "win"
+                    self.theDiceRolled = "win"
                     print("you win")
                 elif p.playerMoveGet() == e.enemyMoveGet():
-                    self.theDice = "draw"
+                    self.theDiceRolled = "draw"
                     print("draw")
                 else:
-                    self.theDice = "loss"
+                    self.theDiceRolled = "loss"
                     print("you lose")
 
-            elif p.playerMoveGet() == 4:
+            elif p.playerMoveGet() == 4:  # 4 == quit
+                self.theDiceRolled = "quit"
 
-                self.theDice = "quit"
-
-            elif p.playerMoveGet() == 5:
-                game.settings("open")
+            elif p.playerMoveGet() == 5:  # 5 == setting
+                game.settings("opening")
 
             else:
                 print("wrong input, try again, you idiot")
@@ -131,17 +130,34 @@ class Game:
         print("Enemy health is " + str(e.enemyHealthGet()))
 
     def settings(self, whichSetting):
-        print("What you want to change?")
-        game.settingsDisplay()
-        self.gameState = "settings"
-        if whichSetting == 1:
-            self.gameState = "game"
-        elif whichSetting == 2:
-            self.theSettings["instructionsON"] = "ON"
+        # print("What you want to change?")
+        # game.settingsDisplay()
+        # self.gameState = "settings"
+        # if whichSetting == 1:  # whichSetting 1 == close
+        #     self.gameState = "game"
+        # elif whichSetting == 2:  # this is instructions toggle
+        #     # if self.theSettings["instructions"]:
+        #     #     self.theSettings["instructions"] = False
+        #     # elif not self.theSettings["instructions"]:
+        #     #     self.theSettings["instructions"] = True
+        #     #
+        #     # self.theSettings["instructions"] = not self.theSettings["instructions"]
+        #     self.theSettings["instructions"]^=True
+
+
+
+
 
 
     def settingsDisplay(self):
-        print(self.theSettings)  # TODO fix this SHIT NIGGA NOW
+        print("You can use close to close the settings")
+        for key, value in self.theSettings.items():
+            if value:
+                temp = "ON"
+            elif not value:
+                temp = "OFF"
+
+            print(key + " is " + temp)
 
 
 
@@ -160,8 +176,11 @@ game = Game()
 
 while playerHealth > 0:
     # TODO add cls() somewhere
-    game.instructions()  # TODO fill in the instructionsON thing from the settings menu
-    p.playerMoveTake(input())
+    game.instructions()
+    if game.gameStateGet() == "settings":
+        pass
+    else:
+        p.playerMoveTake(input())
     e.enemyMoveSet()
     theDice = game.theDice()
 
