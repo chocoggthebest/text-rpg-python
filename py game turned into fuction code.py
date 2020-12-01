@@ -97,18 +97,24 @@ class Game:
                 if p.playerMoveGet() > e.enemyMoveGet() and not (p.playerMoveGet() == 3 and e.enemyMoveGet() == 1):
                     self.theDiceRolled = "win"
                     print("you win")
+
+
                 elif p.playerMoveGet() == e.enemyMoveGet():
                     self.theDiceRolled = "draw"
+
+
                     print("draw")
                 else:
                     self.theDiceRolled = "loss"
                     print("you lose")
 
+
+
             elif p.playerMoveGet() == 4:  # 4 == quit
                 self.theDiceRolled = "quit"
 
             elif p.playerMoveGet() == 5:  # 5 == setting
-                game.settings("opening")
+                game.settings("takeTheInput")
 
             else:
                 print("wrong input, try again, you idiot")
@@ -119,7 +125,7 @@ class Game:
             game.settings(input())
 
     def theDiceRoll(self):
-        return
+        return  # TODO should return the "The Rolled Dice"
 
     @staticmethod
     def playerHealthDisplay():
@@ -136,27 +142,52 @@ class Game:
         # if whichSetting == 1:  # whichSetting 1 == close
         #     self.gameState = "game"
         # elif whichSetting == 2:  # this is instructions toggle
-        #     # if self.theSettings["instructions"]:
-        #     #     self.theSettings["instructions"] = False
-        #     # elif not self.theSettings["instructions"]:
-        #     #     self.theSettings["instructions"] = True
-        #     #
-        #     # self.theSettings["instructions"] = not self.theSettings["instructions"]
+        #     if self.theSettings["instructions"]:
+        #         self.theSettings["instructions"] = False
+        #     elif not self.theSettings["instructions"]:
+        #         self.theSettings["instructions"] = True
+        #
+        #     self.theSettings["instructions"] = not self.theSettings["instructions"]
         #     self.theSettings["instructions"]^=True
 
+        state = True
+        while state:
+            if whichSetting == "0":  # the first thing the function does is in here
+                self.gameState = "settings"
+                game.settingsDisplay(True)
+
+                settInput = input()
+
+                try:
+                    game.settingsDisplay(False)
+                    whichSetting = settingsDict[settInput]
+                except KeyError:
+                    whichSetting = "0"
+                    print("wrong input, try again, you idiot")
+
+            elif whichSetting == "1":
+                self.gameState = "game"
+                break
+            elif whichSetting == "2":
+                self.theSettings["instructions"] ^= True
+                game.settingsDisplay(True)
 
 
 
 
 
-    def settingsDisplay(self):
-        print("You can use close to close the settings")
+
+
+    def settingsDisplay(self, showExtraInfo):
+        if showExtraInfo:
+            print("Which setting you want to change?")
+
+
         for key, value in self.theSettings.items():
             if value:
                 temp = "ON"
             elif not value:
                 temp = "OFF"
-
             print(key + " is " + temp)
 
 
