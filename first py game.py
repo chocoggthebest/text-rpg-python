@@ -80,7 +80,7 @@ while playerHealth > 0:
                     print("dawn you crit that for " + str(critHit + 1))
                     enemyHealth -= critHit
 
-                print(not enemyHealth <= 0 and "Your health is " + str(playerHealth))  # TODO fix this shit nigga
+                print(not enemyHealth <= 0 and "Your health is " + str(playerHealth))  # TODO fix this shit
                 print(not enemyHealth <= 0 and "Enemy health is " + str(enemyHealth))
 
             elif playerMove == enemyMove:
